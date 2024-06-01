@@ -1,30 +1,61 @@
-# React & Tailwind CSS Starter Pack
+## StudyNotion
+** StudyNotion is a fully functional ed-tech platform built using the MERN stack (MongoDB, Express.js, React.js, Node.js). It allows users to create, consume, and rate educational content, offering an interactive learning experience for students and a platform for instructors to showcase their expertise globally.
 
-This is a starter pack for creating React projects with Tailwind CSS configured. It uses React version **18.2** and Tailwind CSS version **3.2**.
+# Front-end
+    The front end of StudyNotion is designed using Figma for a clean and minimal user interface. Check out the Figma design here.
 
-## Usage
+Key Pages
+ ## For Students:
 
-This starter pack includes a basic setup for using **Tailwind CSS with React**. To start building your own components and styles, follow these steps:
+    Homepage: Introduction to the platform, links to course list and user details.
+    Course List: List of all courses with descriptions and ratings.
+    Wishlist: Courses added to the student's wishlist.
+    Cart Checkout: Complete the course purchase.
+    Course Content: Access course content including videos and materials.
+    User Details: Student account information.
+    User Edit Details: Edit account details.
+## For Instructors:
 
-1. Clone the repository to your local machine.
-    ```sh
-    git clone https://github.com/thepranaygupta/react-tailwind-css-starter-pack.git
-    ```
+    Dashboard: Overview of courses, ratings, and feedback.
+    Insights: Detailed course metrics.
+    Course Management: Create, update, delete courses, manage content and pricing.
+    Profile Details: View and edit account details.
+## For Admin (Future Scope):
 
-1. Install the required packages.
-    ```sh
-    cd react-tailwind-css-starter-pack
-    npm install
-    ```
+    Dashboard: Overview of platform's courses, instructors, and students.
+    Insights: Platform metrics including users, courses, and revenue.
+    Instructor Management: Manage instructor details, courses, and ratings.
+    Other Pages: User and course management.
+## Technologies Used
+    ReactJS: Building user interfaces
+    CSS & Tailwind: Styling frameworks
+    Redux: State management
+    VSCode: Development environment
 
-1. Start the development server.
-    ```sh
-    npm start
-    ```
-1. Open the project in your browser at [`http://localhost:3000`](http://localhost:3000) to view your project.
-1. Create your React components and add your styles using Tailwind classes. You can also create new CSS files and import them into your components.
+## Back-end Architecture
+StudyNotion uses a monolithic architecture with Node.js and Express.js, and MongoDB as the primary database. This design ensures better control, security, and performance.
 
-The project is set up to use `postcss-cli` to process your CSS files. You can add your own `tailwind.config.js` file to customize your Tailwind setup.
+## Features and Functionalities
+    User Authentication & Authorization: Email/password login, OTP verification, password reset.
+    Course Management: CRUD operations for courses, manage content and media.
+    Payment Integration: Razorpay for handling payments.
+    Cloud-based Media Management: Cloudinary for storing and managing media.
+    Markdown Formatting: Easier display and rendering of course content.
+
+## Technologies Used
+    Node.js: Primary framework
+    MongoDB: Flexible and scalable data storage
+    Express.js: Web application framework
+    JWT: Secure authentication and authorization
+    Bcrypt: Password hashing
+    Mongoose: Object Data Modeling (ODM) library
+
+## Data Models and Database Schema
+    Student Schema: Fields for name, email, password, and course details.
+    Instructor Schema: Fields for name, email, password, and course details.
+    Course Schema: Fields for course name, description, instructor details, and media content.
+## Summary
+StudyNotion is designed to provide an immersive learning experience with robust features for students and instructors. With a well-structured front-end and back-end, it ensures security, scalability, and optimal performance. Future enhancements will further expand its capabilities.
 
 ## Contributing
 
