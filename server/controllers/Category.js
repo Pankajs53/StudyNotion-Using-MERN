@@ -33,11 +33,13 @@ exports.createCategory = async (req,res) =>{
 // get all tags
 exports.showAllCategory = async(req,res) =>{
     try{
+        // console.log("Inside show category api call")
         const allCategorys = await Category.find({}, {name:true ,description:true});
+        // console.log("Sending data",allCategorys)
         return res.status(200).json({
             success:true,
             message:"ALL TAGS ARE THESE",
-            Data:allCategorys
+            data:allCategorys
         })
     }catch(error){
         console.log("ERROR IN GETTING ALL TAGs ->", error);

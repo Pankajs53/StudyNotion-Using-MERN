@@ -16,7 +16,7 @@ exports.sendOTP = async(req,res) => {
         const {email} = req.body;
         console.log("EMAIL TO SEND OTP IS->",email);
         // check if user already present
-        const checkUserPresent = await OTP.findOne({email});
+        const checkUserPresent = await User.findOne({email});
         if(checkUserPresent){
             return res.status(401).json({
                 success:false,
@@ -166,6 +166,8 @@ exports.signUp = async(req,res) => {
 }
 
 
+
+
 // login 
 exports.login = async(req,res) =>{
     try{
@@ -182,7 +184,7 @@ exports.login = async(req,res) =>{
 
         // check if present in DB
         const userExist = await User.findOne({email}).populate("additionalDetails");
-        console.log(userExist);
+        console.log("USER EXIST",userExist);
         if(!userExist){
             return res.status(405).json({
                 success:false,

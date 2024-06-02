@@ -1,16 +1,51 @@
-import React from "react";
+import React, { useEffect } from "react";
 import logo from "../../assets/Logo/Logo-Full-Light.png";
 import { Link, matchPath, useLocation } from "react-router-dom";
 import { NavbarLinks } from "../../data/navbar-links";
-// import { AiOutlineMenu, AiOutlineShoppingCart } from "react-icons/ai"
+import { AiOutlineMenu, AiOutlineShoppingCart } from "react-icons/ai";
 import { BsChevronDown } from "react-icons/bs";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+// import { AiOutlineShoppingCart } from "react-icons/ci";
+import ProfileDropDown from "../core/auth/ProfileDropDown";
+import { apiConnector } from "../../services/apiConnector";
+import { categories } from "../../services/apis";
+import { toast } from "react-hot-toast";
+import { ACCOUNT_TYPE } from "../../utils/constants";
 
 const NavBar = () => {
+  const { token } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.profile);
+  const { totalItems } = useSelector((state) => state.cart);
+
   const location = useLocation();
 
   const [subLinks, setSubLinks] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const fetchSubLinks = async () => {
+    setLoading(true);
+    try {
+      const result = await apiConnector("GET", categories.CATEGORIES_API);
+      console.log("categories data is:", result);
+      setSubLinks(result.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
+  };
+
+  const delteNow = () => {
+    subLinks.map((link, i) => {
+      console.log(link.name);
+    });
+  };
+
+  useEffect(() => {
+    fetchSubLinks();
+
+    delteNow();
+  }, []);
 
   const matchRoute = (route) => {
     return matchPath({ path: route }, location.pathname);
@@ -52,10 +87,8 @@ const NavBar = () => {
                         ) : subLinks.length ? (
                           <>
                             {subLinks
-                              ?.filter(
-                                (subLink) => subLink?.courses?.length > 0
-                              )
-                              ?.map((subLink, i) => (
+                              // have made few changes here to remove bug before after api call it was not rendering the list of courses on UI
+                              .map((subLink, i) => (
                                 <Link
                                   to={`/catalog/${subLink.name
                                     .split(" ")
@@ -64,7 +97,9 @@ const NavBar = () => {
                                   className="rounded-lg bg-transparent py-4 pl-4 hover:bg-richblack-50"
                                   key={i}
                                 >
-                                  <p>{subLink.name}</p>
+                                  <p className="text-richblack-900">
+                                    {subLink.name}
+                                  </p>
                                 </Link>
                               ))}
                           </>
@@ -91,12 +126,40 @@ const NavBar = () => {
             ))}
           </ul>
         </nav>
-        
+
         {/* login/signup/dashboard */}
         <div className="flex gap-x-4 items-center">
+          {/* cart work */}
 
+          {user && user?.accountType !== ACCOUNT_TYPE.INSTRUCTOR && (
+            <Link to="/dashboard/cart" className="relative">
+              <AiOutlineShoppingCart className="text-2xl text-richblack-100" />
+              {totalItems > 0 && (
+                <span className="absolute -bottom-2 -right-2 grid h-5 w-5 place-items-center overflow-hidden rounded-full bg-richblack-600 text-center text-xs font-bold text-yellow-100">
+                  {totalItems}
+                </span>
+              )}
+            </Link>
+          )}
+
+          {token === null && (
+            <Link to="/login">
+              <button className="border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100 rounded-md">
+                Log in
+              </button>
+            </Link>
+          )}
+
+          {token === null && (
+            <Link to="/signup">
+              <button className="border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100 rounded-md">
+                Sign Up
+              </button>
+            </Link>
+          )}
+
+          {token !== null && <ProfileDropDown />}
         </div>
-
       </div>
     </div>
   );
