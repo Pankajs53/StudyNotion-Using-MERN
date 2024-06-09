@@ -70,7 +70,7 @@ exports.signUp = async(req,res) => {
     try{
         // fetch the data from body
         const {firstName, lastName,email,password,confirmPassword,accountType,contactNumber,otp} = req.body;
-        console.log(otp);
+        console.log("otp in backend is->",otp);
         // validate the data
         if(!firstName || !lastName || !email || !password || !confirmPassword ||
             !otp ){
@@ -90,12 +90,13 @@ exports.signUp = async(req,res) => {
         // check if user already exist
         const existingUser = await User.findOne({email});
         if(existingUser){
+            console.log("Already exist in database")
             return res.status(400).json({
                 success:false,
                 message:"User Already Registered",
             })
         }
-        console.log(existingUser);
+        
 
         // find most recent otp for the user
         const recentOTP = await OTP.find({email:email}).sort({createAt:-1}).limit(1);
@@ -112,6 +113,7 @@ exports.signUp = async(req,res) => {
             })
             
         }else if(otp!==recentOTP[0].otp){
+            console.log("current otp",otp ,"Db otp",recentOTP[0].otp)
             return res.status(400).json({
                 success:false,
                 message:"OTP does not match"

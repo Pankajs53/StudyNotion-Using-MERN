@@ -1,65 +1,100 @@
 import "./App.css";
+import React, { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
-import Home from "./pages/Home";
-import NavBar from "./components/common/NavBar";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import ForgotPassword from "./pages/ForgotPassword";
-import OpenRoute from "./components/core/auth/OpenRoute";
-import UpdatePassword from "./pages/UpdatePassword";
-import VerifyEmail from "./pages/VerifyEmail";
-import Dashboard from "./pages/Dashboard"
-import MyProfile from "./components/core/Dashboard/MyProfile";
-import PrivateRoute from "./components/core/auth/PrivateRoute"
+import LoadingPage from "./pages/LoadingPage";
+import StudentRoute from "./components/core/auth/StudentRoute";
+
+// Lazy load the components
+const Home = lazy(() => import("./pages/Home"));
+const NavBar = lazy(() => import("./components/common/NavBar"));
+const Login = lazy(() => import("./pages/Login"));
+const Signup = lazy(() => import("./pages/Signup"));
+const ForgotPassword = lazy(() => import("./pages/ForgotPassword"));
+const OpenRoute = lazy(() => import("./components/core/auth/OpenRoute"));
+const UpdatePassword = lazy(() => import("./pages/UpdatePassword"));
+const VerifyEmail = lazy(() => import("./pages/VerifyEmail"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const MyProfile = lazy(() => import("./components/core/Dashboard/MyProfile"));
+const PrivateRoute = lazy(() => import("./components/core/auth/PrivateRoute"));
+const About = lazy(() => import("./pages/About"));
+const Contact = lazy(() => import("./pages/Contact"));
+const Settings = lazy(() =>
+  import("./components/core/Dashboard/Settings/index")
+);
+const Sidebar = lazy(() => import("./components/core/Dashboard/Sidebar"));
+const Error = lazy(() => import("./pages/Error"));
+const EnrolledCourses = lazy(() =>
+  import("./components/core/Dashboard/EnrolledCourses")
+);
+const Cart = lazy(() => import("./components/core/Dashboard/Cart/index"));
 
 function App() {
   return (
     <div className="w-screen min-h-screen bg-richblack-900 flex flex-col font-inter">
-      <NavBar />
-      <Routes>
-        <Route path="" element={<Home />}></Route>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route
-          path="forgot-password"
-          element={
-            <OpenRoute>
-              <ForgotPassword />
-            </OpenRoute>
-          }
-        />
-
-        <Route
-          path="update-password/:id"
-          element={
-            <OpenRoute>
-              <UpdatePassword />
-            </OpenRoute>
-          }
-        />
-
-        <Route
-          path="verify-email"
-          element={
-            <OpenRoute>
-              <VerifyEmail/>
-            </OpenRoute>
-          }
-        />
-
-        <Route
-          element={
-            <PrivateRoute>
-              <Dashboard />
-            </PrivateRoute>
-          }
-        />
-         
-          {/* Route for all users */}
-        <Route path="/dashboard/my-profile" element={<MyProfile />} />
-
-          
-      </Routes>
+      <Suspense fallback={<LoadingPage />}>
+        <NavBar />
+        <Routes>
+          <Route path="" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route
+            path="forgot-password"
+            element={
+              <OpenRoute>
+                <ForgotPassword />
+              </OpenRoute>
+            }
+          />
+          <Route
+            path="update-password/:id"
+            element={
+              <OpenRoute>
+                <UpdatePassword />
+              </OpenRoute>
+            }
+          />
+          <Route
+            path="verify-email"
+            element={
+              <OpenRoute>
+                <VerifyEmail />
+              </OpenRoute>
+            }
+          />
+          <Route
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          >
+            <Route path="dashboard/my-profile" element={<MyProfile />} />
+            <Route path="dashboard/settings" element={<Settings />} />
+            <Route
+              path="dashboard/enrolled-courses"
+              element={
+                <StudentRoute>
+                  <EnrolledCourses />
+                </StudentRoute>
+              }
+            />
+            <Route
+              path="dashboard/cart"
+              element={
+                <StudentRoute>
+                  <Cart />
+                </StudentRoute>
+              }
+            />
+            {/* todo */}
+          </Route>
+          <Route path="/sidebar" element={<Sidebar />} />
+          <Route path="/loading" element={<LoadingPage />} />
+          <Route path="*" element={<Error />} />
+        </Routes>
+      </Suspense>
     </div>
   );
 }

@@ -62,6 +62,8 @@ export function signUp(
     const toastId = toast.loading("Loading...")
     dispatch(setLoading(true))
     try {
+
+      console.log("Otp from frontend is->",otp)
       const response = await apiConnector("POST", SIGNUP_API, {
         accountType,
         firstName,
@@ -120,6 +122,7 @@ export function login(email, password, navigate) {
         : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.user.firstName} ${response.data.user.lastName}`
         dispatch(setUser({ ...response.data.userExist, image: userImage }))
         localStorage.setItem("token", JSON.stringify(response.data.token))
+        localStorage.setItem("user", JSON.stringify(response.data.userExist))
         navigate("/dashboard/my-profile")
       }
 
