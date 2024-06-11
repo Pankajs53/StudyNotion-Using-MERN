@@ -3,6 +3,8 @@ import React, { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import LoadingPage from "./pages/LoadingPage";
 import StudentRoute from "./components/core/auth/StudentRoute";
+import AddCourse from "./components/core/Dashboard/AddCourse.jsx";
+import InstructorRoute from "./components/core/auth/InstructorRoute.jsx";
 
 // Lazy load the components
 const Home = lazy(() => import("./pages/Home"));
@@ -89,6 +91,18 @@ function App() {
               }
             />
             {/* todo */}
+
+            {/* instructor routes */}
+            <Route
+              path="dashboard/add-course"
+              element={
+                <InstructorRoute>
+                  <AddCourse />
+                </InstructorRoute>
+              }
+            />
+
+            
           </Route>
           <Route path="/sidebar" element={<Sidebar />} />
           <Route path="/loading" element={<LoadingPage />} />
