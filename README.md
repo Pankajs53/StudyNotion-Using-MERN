@@ -1,6 +1,9 @@
 ## StudyNotion
 ** StudyNotion is a fully functional ed-tech platform built using the MERN stack (MongoDB, Express.js, React.js, Node.js). It allows users to create, consume, and rate educational content, offering an interactive learning experience for students and a platform for instructors to showcase their expertise globally.
 
+## The backend server for this project is available as a Docker image on Docker Hub. You can pull the image using the following command:
+docker pull pankajs53/studynotion-backend:v3
+
 # Front-end
     The front end of StudyNotion is designed using Figma for a clean and minimal user interface. Check out the Figma design here.
 
