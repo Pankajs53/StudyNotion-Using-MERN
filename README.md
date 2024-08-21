@@ -4,6 +4,9 @@
 ## The backend server for this project is available as a Docker image on Docker Hub. You can pull the image using the following command:
 docker pull pankajs53/studynotion-backend:v3
 
+## Current Live Version can be find on below link:
+https://rad-valkyrie-749c03.netlify.app
+
 # Front-end
     The front end of StudyNotion is designed using Figma for a clean and minimal user interface. Check out the Figma design here.
 
